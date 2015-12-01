@@ -5,9 +5,10 @@
 <title>shell中的变量</title>
 <style>
 .div{
-background-color:#CCC;
-border-style:ridge;
-border:1px
+background-color:#000;
+border:solid #000 1px;
+font-family:Verdana, Geneva, sans-serif;
+color:#FFF
 }
 </style>
 </head>
@@ -59,5 +60,12 @@ The variable myname is cookie
      Enter your name:cookie<br>
      Hello cookie</div>
 <b>3.命令替换：VAR=`date`、VAR=$(date)</b><br>
+<div class="div">
+[root@cookie ~]# cat today.sh <br>
+TODAY=`date +%A`<br>
+echo "Today is $TODAY"<br>
+[root@cookie ~]# ./today.sh <br>
+Today is Tuesday<br>
+</div>
 </body>
 </html>
