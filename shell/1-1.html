@@ -28,51 +28,5 @@
 [root@cookie cookie]# echo "The variable myname is $myname"<br>
 The variable myname is cookie
 </div>
-
-<p class="p">
-shell完全没有“类型”的概念，如果一定要说类型，那么任何变量都是字符串，但是有一些函数在处理字符串时会将其中包含的数字字符当成数值来处理，在其他计算机语言中，这种错误会在编译期间捕获。因为shell脚本是被解释而不是被编译，所以无法捕获到这种错误。
-shell变量的另一个特别之处是在使用它们之前不必显式地进行申明————没有赋值得变量就等于包含空字符串的变量。引用未定义的变量不会抛出错误。
-</p>
-
-<div class="div">
-[root@cookie cookie]# cat unset.sh <br>
-echo "The variable myname is $myname"<br>
-myname="cookie"<br>
-echo "The variable myname is $myname"<br>
-[root@cookie cookie]# ./unset.sh <br>
-The variable myname is <br>
-The variable myname is cookie
-</div>
-<p>注：以上unset.sh文件权限为755</p>
-     <div class="div">
-     [root@cookie cookie]# chmod +x unset.sh<br>
-     [root@cookie cookie]# chmod 755 unset.sh<br>
-     </div>
-
-<h4>变量赋值的方式主要有3种</h4>
-<b>1.显式定义：VAR=value</b><br>
-     等号两边不允许有空格，否则会被当成带有参数的命令，如:ls -l foo<br>
-     <div class="div">
-     [root@cookie cookie]# variable=foo<br>
-     [root@cookie cookie]# echo $variable<br>
-     foo</div>
-<b>2.读取：read VAR</b><br>
-     交互式运行<br>
-     <div class="div">
-     [root@cookie cookie]# cat firsh.sh <br>
-     echo -n "Enter your name:"<br>
-     read myname<br>
-     echo "Hello $myname"<br>
-     [root@cookie cookie]# ./firsh.sh <br>
-     Enter your name:cookie<br>
-     Hello cookie</div>
-<b>3.命令替换：VAR=`date`、VAR=$(date)</b><br>
-<div class="div">
-[root@cookie ~]# cat today.sh <br>
-TODAY=`date +%A`<br>
-echo "Today is $TODAY"<br>
-[root@cookie ~]# ./today.sh <br>
-Today is Tuesday<br>
-</div>
 </body>
 </html>
