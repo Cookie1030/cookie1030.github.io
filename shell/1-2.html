@@ -43,8 +43,8 @@ The variable myname is cookie
 <b>1.显式定义：VAR=value</b><br>
      等号两边不允许有空格，否则会被当成带有参数的命令，如:ls -l foo<br>
      <div class="div">
-     [root@cookie cookie]# variable=foo<br>
-     [root@cookie cookie]# echo $variable<br>
+     [root@cookie cookie]# variable=foo <br>
+     [root@cookie cookie]# echo $variable <br>
      foo</div>
 <b>2.读取：read VAR</b><br>
      交互式运行<br>
@@ -54,39 +54,39 @@ The variable myname is cookie
      read myname<br>
      echo "Hello $myname"<br>
      [root@cookie cookie]# ./firsh.sh <br>
-     Enter your name:cookie<br>
+     Enter your name:cookie <br>
      Hello cookie</div>
 <b>3.从文件读取</b><br>
 	<p class="p">我们可以使用read命令从文件读取文本行。<br>
 	<div class="div">
-	[root@cookie ~]# read message < cookie/index.html<br>
-	[root@cookie ~]# echo $message<br>
+	[root@cookie ~]# read message < cookie/index.html <br>
+	[root@cookie ~]# echo $message <br>
 	 the first line;
 	</div></p>
 	<p class="p">当文件中的内容不止一行时，可以一直循环将所有文本行读入到变量message中(如果读取到文件末尾，read会返回非零值，于是while循环就会停止)
 	<div class="div">
-	[root@cookie ~]# while read message<br>
-	> do<br>
-	> echo $message<br>
-	> done < cookie/index.html<br>
-	the first line;<br>
-	the second line;<br>
+	[root@cookie ~]# while read message <br>
+	> do <br>
+	> echo $message <br>
+	> done < cookie/index.html <br>
+	the first line; <br>
+	the second line; <br>
 	the third lines.
 	</div></p>
 	<p class="p">上面的命令将cookie/index.html的内容导入到循环中，所以循环不断的从cookie/index.html中读取下一行并将内容回显出来，直到文件中的所有消息都被去读取。在循环中
 	的每一步中引入一个短暂的暂停可以更好的展示这种逐行读取的特性。
 	<div class="div">
-	[root@cookie ~]# while read message<br>
-	> do<br>
-	> echo $message<br>
-	> sleep 1<br>
-	> date<br>
-	> done < cookie/index.html<br>
-	the first line;<br>
-	Thu Mar 17 17:48:43 HKT 2016<br>
-	the second line;<br>
-	Thu Mar 17 17:48:44 HKT 2016<br>
-	the third lines.<br>
+	[root@cookie ~]# while read message <br>
+	> do <br>
+	> echo $message <br>
+	> sleep 1 <br>
+	> date <br>
+	> done < cookie/index.html <br>
+	the first line; <br>
+	Thu Mar 17 17:48:43 HKT 2016 <br>
+	the second line; <br>
+	Thu Mar 17 17:48:44 HKT 2016 <br>
+	the third lines. <br>
 	Thu Mar 17 17:48:45 HKT 2016
 	</div></p>
 <b>4.命令替换：VAR=`date`、VAR=$(date)</b><br>
