@@ -1,11 +1,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>params</title>
+<title>返回码</title>
 <style>
 .div{
 	background-color:#CCC;
-	border:1px solid #000;
+	border:0px solid #000;
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:small;
 }
@@ -17,6 +17,48 @@
 </head>
 
 <body>
+<p class="p">对于grep，返回1表示“不匹配”，大于或等于2表示grep本身运行的某种错误，如文件没有找到。<br>
+如果命令运行成功——————运行无错误且有匹配的文本行——————那么按照惯例，返回退出码0，表示运行成功。</p>
+<div class="div">
+<b>[root@cookie cookie]# grep nutty /etc/hosts</b><br>
+<b>[root@cookie cookie]# echo $?</b><br>
+1
+</div><br>
+<div class="div">
+<b>[root@cookie cookie]# grep cookie /etc/hosttable </b><br>
+grep: /etc/hosttable: No such file or directory <br>
+<b>[root@cookie cookie]# echo $? </b><br>
+2
+</div><br>
+<div class="div">
+<b>[root@WWW cookie]# grep cookie /etc/hosts </b><br>
+1.1.1.1 cookie <br>
+<b>[root@WWW cookie]# echo $? </b><br>
+0
+</div>
+<p class>同时读取多个变量：</p>
+<div class="div">
+<b>[root@cookie cookie]# cat datafile </b><br>
+the quick brown fox <br>
+<b>[root@cookie cookie]# read field1 field2 field3 < datafile </b><br>
+<b>[root@cookie cookie]# echo field one is $field1 </b><br>
+field one is the <br>
+<b>[root@cookie cookie]# echo field two is $field2 </b><br>
+field two is quick <br>
+<b>[root@cookie cookie]# echo field three is $field3 </b><br>
+field three is brown fox
 
+</div>
+<p class>如果文件中的输入不够，则有些变量将为空：</p>
+<div class="div">
+<b>[root@cookie cookie]# echo the quick > datafile  </b><br>
+<b>[root@cookie cookie]# read field1 field2 field3 < datafile </b><br>
+<b>[root@cookie cookie]# echo field one is $field1 </b><br>
+field one is the <br>
+<b>[root@cookie cookie]# echo field two is $field2 </b><br>
+field two is quick <br>
+<b>[root@cookie cookie]# echo field three is $field3 </b><br>
+field three is
+</div>
 </body>
 </html>

@@ -1,11 +1,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>params</title>
+<title>位置参数</title>
 <style>
 .div{
 	background-color:#CCC;
-	border:1px solid #000;
+	border:0px solid #000;
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:small;
 }
@@ -18,16 +18,121 @@
 
 <body>
 <h2>当调用shell脚本时，对其传递参数有很大的作用。</h2>
+<p class="p">参数是让脚本处理的某个文件的名称。这些参数在脚本中是通过它们在命令行中所处的位置来引用的：$0是命令本身的名称，$1是第一个参数，$2是第二个参数，以此类推。
+这些变量的值无法修改，它们属于变量的特殊情况。</p>
 <div class="div">
-[root@cookie cookie]# cat params.sh <br>
+<b>[root@cookie cookie]# cat params.sh </b><br>
 echo "My name is `basename $0` - I was called as $0"<br>
 echo "My firsh parameter is:$1" <br>
 echo "My second parameter is:$2" <br>
-[root@cookie cookie]# ./params.sh one two <br>
+<b>[[root@cookie cookie]# ./params.sh one two </b><br>
 My name is params.sh - I was called as ./params.sh <br>
 My firsh parameter is:one <br>
 My second parameter is:two
 </div>
-<p>&nbsp;</p>
+<p class="p">脚本并不知道被调用时使用了多少个参数。对参数的数据进行检测可以让脚本更人性化，因为它可以在用户不了解适当用法时给出用法信息。<br>
+变量$#告诉脚本调用时使用参数的数目。</p>
+<div class="div">
+<b>[root@cookie cookie]# cat params.sh  </b><br>
+echo "My name is `basename $0` - I was called as $0" <br>
+echo "I was called with $# parameters." <br>
+if [ "$#" -eq "2" ]; then <br>
+   #The script was called with exactly two parameters,good.Let's continue. <br>
+   echo "My first parameter is:$1" <br>
+   echo "My second parameter is:$2" <br>
+else <br>
+   #The "$#" variable must tell us that we have exactly two parameters. <br>
+   #If not,we will tell the user how to run the script. <br>
+   echo "Usage:`basename $0` first second" <br>
+   echo "You provided $# parameters, but 2 are required." <br>
+fi <br>
+<b>[root@cookie cookie]# ./params.sh one two </b><br>
+My name is params.sh - I was called as ./params.sh <br>
+I was called with 2 parameters. <br>
+My first parameter is:one <br>
+My second parameter is:two <br>
+<b>[root@cookie cookie]# ./params.sh one two three </b><br>
+My name is params.sh - I was called as ./params.sh <br>
+I was called with 3 parameters. <br>
+Usage:params.sh first second <br>
+You provided 3 parameters, but 2 are required. <br>
+</div>
+<p class="p">一般假设如果使用参数，$0~$9就够用了，但如果需要处理更多参数时：</p>
+<div class="div">
+<b>[root@WWW cookie]# cat params.sh  </b><br>
+echo "My name is `basename $0` - I was called as $0" <br>
+echo "I was called with $# parameters." <br>
+echo "My first parameter is:$1" <br>
+echo "My second parameter is:$2" <br>
+echo "My third parameter is:$3" <br>
+echo "My fourth parameter is:$4" <br>
+echo "My fiveth parameter is:$5" <br>
+echo "My sixth parameter is:$6" <br>
+echo "My seventh parameter is:$7" <br>
+echo "My eighth parameter is:$8" <br>
+echo "My nineth parameter is:$9" <br>
+echo "My tenth parameter is:$10" <br>
+echo "My eleventh parameter is:$11" <br>
+<b>[root@WWW cookie]# ./params.sh one two three four five six seven eight nine ten eleven twelve </b><br>
+My name is params.sh - I was called as ./params.sh <br>
+I was called with 12 parameters. <br>
+My first parameter is:one <br>
+My second parameter is:two <br>
+My third parameter is:three <br>
+My fourth parameter is:four <br>
+My fiveth parameter is:five <br>
+My sixth parameter is:six <br>
+My seventh parameter is:seven <br>
+My eighth parameter is:eight <br>
+My nineth parameter is:nine <br>
+My tenth parameter is:one0 <br>
+My eleventh parameter is:one1
+</div>
+<p class="p">变量$0到$9被定义过，但是$10和$11不存在，且它们被解释成$1后面跟一个数字。面对这种情况，必须有接收大于9个参数的方法：</p>
+<div class="div">
+<b>[root@cookie cookie]# cat manyparams.sh  </b><br>
+echo "My name is `basename $0` - I was called as $0" <br>
+echo "I was called with $# parameters." <br>
+count = 1 <br>
+while [ "$#" -ge "1" ]; do <br>
+   echo "Parameter number $count is:$1" <br>
+   let count=$count+1 <br>
+   shift <br>
+done  <br>
+<b>[root@cookie cookie]# ./manyparams.sh one two three four five six seven eight nine ten eleven twelve </b><br>
+My name is manyparams.sh - I was called as ./manyparams.sh <br>
+I was called with 12 parameters. <br>
+Parameter number 1 is:one <br>
+Parameter number 2 is:two <br>
+Parameter number 3 is:three <br>
+Parameter number 4 is:four <br>
+Parameter number 5 is:five <br>
+Parameter number 6 is:six <br>
+Parameter number 7 is:seven <br>
+Parameter number 8 is:eight <br>
+Parameter number 9 is:nine <br>
+Parameter number 10 is:ten <br>
+Parameter number 11 is:eleven <br>
+Parameter number 12 is:twelve
+</div>
+<p class="p">可以使用shift n一次截去多个变量。如果要截去3个变量，shift 3 等于shift;shift;shift。</p>
+<div class="div">
+<b>[root@WWW cookie]# cat manyparams.sh  </b><br>
+echo "My name is `basename $0` - I was called as $0" <br>
+echo "I was called with $# parameters." <br>
+count=1 <br>
+while [ "$#" -ge "1" ]; do <br>
+   echo "Parameter number $count is:$1" <br>
+   let count=$count+1 <br>
+   shift 3 <br>
+done  <br>
+<b>[root@WWW cookie]# ./manyparams.sh one two three four five six seven eight nine ten eleven twelve </b><br>
+My name is manyparams.sh - I was called as ./manyparams.sh <br>
+I was called with 12 parameters. <br>
+Parameter number 1 is:one <br>
+Parameter number 2 is:four <br>
+Parameter number 3 is:seven <br>
+Parameter number 4 is:ten
+</div>
 </body>
 </html>
