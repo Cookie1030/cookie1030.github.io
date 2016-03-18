@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>shell中的变量</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body>
+<p>引用变量存储的值时，必须加上$符号</p>
+     <div class="div">echo $PATH</div>
+<p>为变量赋值时，不需要加上$符号</p>
+     <div class="div">PATH=/usr/sbin</div>
+<h4>示例</h4>
+<div class="div">
+[root@cookie cookie]# myname=cookie<br>
+[root@cookie cookie]# echo "The variable myname is $myname"<br>
+The variable myname is cookie
+</div>
+</body>
+</html>
