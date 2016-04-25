@@ -1,0 +1,109 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>文件名扩展</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+	width:80%;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+	width:80%;
+}
+.tab{
+	border:1px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body text-align:right>
+<p class="p">
+编写shell脚本时，通配符的用法有两种。shell本身将通配符用于文件名扩展，所以可以用a*匹配所有以字母a开头的文件，用*.txt匹配所有文本文件；
+另外还有正则表达式。
+</p>
+<p class="p"><b>文件名扩展</b><br>
+文件名扩展中的两个关键字是问号(?)与星号(*)。问号匹配任意单个字符，星号匹配任意字符序列。<br>
+注意：*txt不同于*.txt<br >
+因为*匹配任意字符序列，所以也可以匹配空字符。而问号则不同，它必须总是匹配一个字符。<br>
+通配符可以处于任意位置，而不仅仅是文件名的两端。文件名中包含点号没有特殊意义。
+</p>
+<p class="p">
+bash shell另一个有用的特性是可以扩展一列包含在花括号中的字符串，通过指定需要的数，文件列表被更精确的匹配。
+</p>
+<div class="div">
+<b>[root@cookie cookie]# ls -ld /etc/rc{0,1,2,3,4,5,6}.d </b><br>
+lrwxrwxrwx 1 root root 10 Nov 16 01:17 /etc/rc0.d -> rc.d/rc0.d<br>
+lrwxrwxrwx 1 root root 10 Nov 16 01:17 /etc/rc1.d -> rc.d/rc1.d<br>
+lrwxrwxrwx 1 root root 10 Nov 16 01:17 /etc/rc2.d -> rc.d/rc2.d<br>
+lrwxrwxrwx 1 root root 10 Nov 16 01:17 /etc/rc3.d -> rc.d/rc3.d<br>
+lrwxrwxrwx 1 root root 10 Nov 16 01:17 /etc/rc4.d -> rc.d/rc4.d<br>
+lrwxrwxrwx 1 root root 10 Nov 16 01:17 /etc/rc5.d -> rc.d/rc5.d<br>
+lrwxrwxrwx 1 root root 10 Nov 16 01:17 /etc/rc6.d -> rc.d/rc6.d<br>
+</div>
+<p class="p">这在创建具有这类似结构的多个目录时特别有用：</p>
+<div class="div">
+<b>[root@cookie cookie]# mkdir -p /root/cookie/domains/domain{1,2,3}/bin</b><br>
+<b>[root@cookie cookie]# ls -ld /root/cookie/domains/*/bin</b><br>
+drwxr-xr-x 2 root root 4096 Mar 18 13:29 /root/cookie/domains/domain1/bin<br>
+drwxr-xr-x 2 root root 4096 Mar 18 13:29 /root/cookie/domains/domain2/bin<br>
+drwxr-xr-x 2 root root 4096 Mar 18 13:29 /root/cookie/domains/domain3/bin<br>
+</div>
+<p class="p">
+尽管文件中的点好没有特殊意义，但连字符(-)几乎被每一个Unix与Linux命令使用。当遇到一个文件名为-rf或者是更糟糕
+的-rf.时，该如何删除？答案是rm -rf. 但这会删除当前目录下的所有文件与目录。很多命令使用双连字符(--)来表示命令选
+项的结束与要操作的文件名列表的开始。所以rm --"rf."将删除文件rf。用*或?命名的文件可能造成类似的问题————只要
+可能，最好避免在文件名中使用这些字符。
+</p>
+<table class="tab">
+	<tr><td>类</td><td>成员</td></tr>
+	<tr><td>alnum</td><td>A-Z、a-z、0-9</td></tr>
+	<tr><td>alpha</td><td>A-Z、a-z</td></tr>
+	<tr><td>blank</td><td>空格和制表符</td></tr>
+	<tr><td>cntrl</td><td>ASCⅡ字符0-31(非打印控制字符)</td></tr>
+	<tr><td>digit</td><td>0-9</td></tr>
+	<tr><td>graph</td><td>A-Z、a-z、0-9与标点符号</td></tr>
+	<tr><td>lower</td><td>a-z</td></tr>
+	<tr><td>print</td><td>ASCⅡ字符32-127(可打印字符)</td></tr>
+	<tr><td>punct</td><td>标点符号(A-Z、a-z和0-9以外的可打印字符)</td></tr>
+	<tr><td>space</td><td>空格、制表符、LF(10)、VT(11)、FF(12)、CR(13)</td></tr>
+	<tr><td>upper</td><td>A-Z</td></tr>
+	<tr><td>xdigit</td><td>0-9、A-F、a-f</td></tr>
+</table>
+<p class="p">
+如果范围不够精确，还可以在括号中放置一列字符来进行匹配。所以，[aeiou]讲匹配任何元音字母，[13579]将匹
+配奇数数字等。还可以在范围开头使用感叹号(!)或脱字符号(^)来表示相反的意思，即不包含范围中的字符。
+如果需要匹配字符[，我们必须将其置于列表的开头，如[[aeiou]。如果要匹配字符-，可以将它置于列表开头或结尾，但
+不能是其他位置，所以[-aeiou]或[aeiou-]都可以。
+</p>
+<p class="p">
+bash的文件名扩展特性<br>
+set -o noglob
+</p>
+<div class="div">
+<b>[root@cookie cookie]# ls -l *d*.odt </b><br>
+-rw-r--r-- 1 root root 0 Mar 21 09:47 abcdef.odt <br>
+-rw-r--r-- 1 root root 0 Mar 21 09:47 mydoc.odt <br>
+<b>[root@cookie cookie]# touch *d*.odt </b><br>
+<b>[root@cookie cookie]# ls -l *d*.odt </b><br>
+-rw-r--r-- 1 root root 0 Mar 21 09:49 abcdef.odt <br>
+-rw-r--r-- 1 root root 0 Mar 21 09:49 mydoc.odt <br>
+<b>[root@cookie cookie]#  </b><br>
+<b>[root@cookie cookie]#  </b><br>
+<b>[root@cookie cookie]#  </b><br>
+<b>[root@cookie cookie]# set -o noglob </b><br>
+<b>[root@cookie cookie]# touch *d*.odt </b><br>
+<b>[root@cookie cookie]# set +o noglob </b><br>
+<b>[root@cookie cookie]# ls -l *d*.odt </b><br>
+-rw-r--r-- 1 root root 0 Mar 21 09:49 abcdef.odt <br>
+-rw-r--r-- 1 root root 0 Mar 21 09:50 *d*.odt <br>
+-rw-r--r-- 1 root root 0 Mar 21 09:49 mydoc.odt
+</div>
+</body>
+</html>

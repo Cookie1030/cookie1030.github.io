@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>nginx平滑重启</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body>
+
+<p class="p">
+nginx平滑重启
+</p>
+www主网服务器，因安装与其他www服务器安装方式不一样，修改nginx内容时：
+ <div class="div">
+ [root@cookie cookie]# vim /usr/local/webserver/nginx/conf/nginx.conf</br>
+  </div>
+ 重启：
+  <div class="div">
+ [root@cookie cookie]# /usr/local/webserver/nginx/sbin/nginx -s reload</br>
+  </div>
+
+</body>
+</html>

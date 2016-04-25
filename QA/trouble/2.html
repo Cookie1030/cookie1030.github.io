@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>CC官网报价与走势图报价不一样</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body>
+
+<p class="p">
+CC官网报价与走势图报价不一样
+</p>
+1.登录infoadmin服务器</br>
+ <div class="div">
+ [www@infoadmin ~]$ cat /www/cookie.com/infoadmin.cookie.com/xml/data.json</br>
+ [["GOLD","0.00","0.00","1746.25","1735.2","1742.40","1742.40","0.00"],["SILVER","0.00","0.00","35.32","34.83","35.13","35.13","0.00"],["HKGOLD","16185.28","16082.86","16149.60","16149.60"],["CL","0.00","0.00","1752","1751.9","1751.90","1658.85","1782.75"],["USDX","0.00","0.00","1752.58","1732.48","1736.05","1651.72","1958.64"]]</br>
+ [www@infoadmin ~]$ cat /www/cookie.com/info.cookie.com/xml/data.json</br>
+ [["GOLD","0.00","0.00","1237.40","1229.94","1231.34","-0.21","-0.02"],["SILVER","0.00","0.00","17.093","16.784","16.871","-0.093","-0.548"],["HKGOLD","11468.96","11399.81","11412.79","-1.95"],["CL","0.00","0.00","43.60","42.83","43.08","-0.47","-1.08"],["USDX","0.00","0.00","95.10","94.85","94.95","-0.10","-0.11"]]</br>
+ </div>
+ 发现两组数据不一样.</br>
+2.检查XML进程</br>
+  <div class="div">
+[www@info ~]$ ps -ef | grep xml</br>
+ 
+  </div>
+ 发现进程死掉</br>
+3.重新启动xml进程
+<div class="div">
+[www@infoadmin ~]$ /bin/bash /www/cookie.com/infoadmin.cookie.com/crontab/chart.xml.sh</br>
+  </div>
+  重启之后。ps -ef | grep xml 发现还是无进程</br>
+  解决方案：</br>
+  需删除pid</br>
+  <div class="div">
+[www@infoadmin ~]$ rm -rf /var/tmp/info.cookie.com.pid
+  </div>
+ 再将xml重启，ps进程出现。再次检查data.json文件，已同步。
+</body>
+</html>

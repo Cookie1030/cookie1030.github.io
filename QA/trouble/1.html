@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>m.cookie.com/know/momo.html同步有问题</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body>
+
+<p class="p">
+m.cookie.com/know/momo.html同步有问题
+</p>
+1.登录infoadmin服务器</br>
+ <div class="div">
+ [www@infoadmin ~]$ ll /www/cookie.com/knowadminm.cookie.com/html/momo.html</br>
+ -rw-r--r-- 1 www www 1317 Apr 25 09:28 /www/cookie.com/knowadminm.cookie.com/html/momo.html
+  </div>
+ 发现momo.html文件日期正常.</br>
+2.登录info服务器</br>
+  <div class="div">
+[www@info ~]$ ll /www/cookie.com/knowm.cookie.com/momo.html</br>
+ -rw-r--r-- 1 www www 1317 Apr 23 12:25 /www/cookie.com/knowm.cookie.com/momo.html
+  </div>
+ 发现日期不对，同步有问题。</br>
+3.手动执行启动脚本
+<div class="div">
+[www@infoadmin ~]$ bash /www/cookie.com/knowadminm.cookie.com/cron.d/sync.sh</br>
+ xxxxxxx :/usr/bin/rsync:Argument list too long
+  </div>
+  提示：[参数列表过长]</br>
+  解决方案：</br>
+  编辑sync.sh文件</br>
+  <div class="div">
+[www@infoadmin ~]$ vim /www/cookie.com/knowadminm.cookie.com/cron.d/sync.sh</br>
+ 将 $HTML_DIR/* $KNOW; *去掉</br>
+ 即 $HTML_DIR/ $KNOW;
+  </div>
+ 再次手动执行同步脚本。问题解决
+</body>
+</html>

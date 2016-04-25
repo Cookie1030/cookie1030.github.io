@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>移动站专家评论获取不到info数据</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body>
+<p class="p">
+移动站专家评论获取不到info数据
+</p>
+1月16日数据库将infoadmin调整到info。但M站配置文件中database.php文件数据库连接未修改。</br>
+修改mysql root用户密码.</br>
+ <div class="div">
+ mysql>  update user set password = password("123456") where user='root';</br>
+ </div>
+2.刷新mysql系统权限</br>
+  <div class="div">
+mysql>  fulsh privileges;</br>
+   </div>
+ 3.192.168.*.* 可访问该数据库，账户cookie 密码123456
+<div class="div">
+mysql> GRANT ALL PRIVILEGES on * * TO 'cookie'@'192.168.*.*' IDENTIFIED BY '123456' WITH GRANT OPTION;</br>
+  </div>
+</body>
+</html>
