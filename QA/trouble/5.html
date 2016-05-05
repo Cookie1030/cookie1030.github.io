@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>uat环境更新及分支切换有问题</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body>
+<p class="p">
+uat 环境更新及分支切换有问题
+</p>
+ <div class="div" color="red">
+ ~/deployment/run branch uat cookie.com www</br>
+ fatal:Not a git repository(or any of the parent directories):git
+ </div>
+解决办法：git init</br>
+  <div class="div">
+rm -rf /opt/git/uat/cookie.com/www.cookie.com
+   </div>
+</body>
+</html>

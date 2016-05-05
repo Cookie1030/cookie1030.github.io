@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>PHP权限</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body>
+<p class="p">
+PHP权限
+</p>
+ <div class="div" color="red">
+ps aux | grep php
+ </div>
+显示进程所有者为nobody。需修改为cookie用户</br>
+  <div class="div">
+cd /usr/local/php/etc/php-fpm.d/</br>
+vim www.conf
+   </div>
+ 在www.conf文件中，修改user、group即可。ps查看已OK。
+</body>
+</html>

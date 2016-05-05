@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>info服务器启动数据库有问题</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body>
+<p class="p">
+info服务器启动数据库有问题
+</p>
+ <div class="div" color="red">
+mysql -u root -p</br>
+Enter password:</br>
+ERROR 2002(HY000):Can't connection to local MySQL Server through socket '/var/lib/mysql/mysql.sock'(2)</br>
+ </div>
+按照以往经验【find / -name 'mysql.sock'】找到mysql.sock所在目录。登录时，加上-S参数即可，如：</br>
+  <div class="div">
+mysql -S /tmp/mysql.sock -u root -p
+   </div>
+但很显然，这种方法很不好用。</br>
+可查看/etc/my.cnf文件，发现里面信息几乎为空，编辑该文件。
+<div class="div">
+vim /etc/my.cnf</br>
+[client]</br>
+prot = 3306</br>
+socket = /tmp/mysql.sock</br>
+[mysqld]</br>
+prot = 3306</br>
+socket = /tmp/mysql.sock</br>
+max_connections = 2000</br>
+skip-host-cache</br>
+skip-name-resolve</br>
+log-bin = mysql-bin
+</div>
+</body>
+</html>

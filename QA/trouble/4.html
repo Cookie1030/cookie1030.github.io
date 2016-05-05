@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>info不同步</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body>
+<p class="p">
+info数据不同步
+</p>
+启动rsync脚本报错</br>
+ <div class="div" color="red">
+ @ERROR:Unknow module 'cookie.com'</br>
+ rsync error:error stating client-server protocol(code5) at main.c(1503) [sender=3.0.6]
+ </div>
+检查得知sync.sh脚本中：</br>
+  <div class="div">
+MODULE=cookie@192.168.2.10::cookie.com/info.cookie.com</br>
+   </div>
+及后续密码
+<div class="div">
+--password-file = /etc/rsyncd.passwd </br>
+  </div>
+ 所对应 /etc/rsyncd.conf文件中hosts allow 有问题</br>
+ 参考133服务器将sync.sh中MODULE及password注释掉即可</br>
+ <p>定时任务</p>
+ <div class="div">
+ */1 * * * * bash /www/cookie.com/infoadmin.cookie.com/crontal/sync.sh
+ </div>
+ 注：chmod +x sync.sh  （可执行权限 755）
+</body>
+</html>
