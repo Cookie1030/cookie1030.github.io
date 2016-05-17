@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>首页行情与走势图不同步</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body>
+<p class="p">
+首页行情与走势图不同步，检查发现同步脚本没问题
+</p>
+ <div class="div" color="red">
+ ps -ef | grep xml
+</div>
+<p class="p">查看行情接口数据，发现数据不是不是实时，而是很久以前的，并且一直没有变动</p>
+<div class="div">
+ll /www/cookie.com/info.cookie.com/xml/data.json</br>
+-rw-r--r-- 1 www www 310 May 14 11:43 /www/cookie.com/info.cookie.com/xml/data.json
+</div>
+<p class="p">查看infoadmin的database.php文件，找出数据库IP，telnet 3306端口检查是否有问题</p>
+<div class="div">
+telnet 202.82.***.*** 3306</br>
+Trying 202.82.***.***...</br>
+telnet: connect to address 202.82.***.***: No route to host
+</div>
+<p>联系DBA开通infoadmin机器到数据库的访问权限即可</p>
+</body>
+</html>
