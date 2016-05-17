@@ -22,7 +22,9 @@
 首页行情与走势图不同步，检查发现同步脚本没问题
 </p>
  <div class="div" color="red">
- ps -ef | grep xml
+ ps -ef | grep xml</br>
+www      19357     1  0 14:00 ?        00:00:00 /bin/bash /www/cookie.com/infoadmin.cookie.com/crontab/chart.xml.sh restart</br>
+www      20729 24058  0 14:08 pts/0    00:00:00 grep xml
 </div>
 <p class="p">查看行情接口数据，发现数据不是不是实时，而是很久以前的，并且一直没有变动</p>
 <div class="div">
