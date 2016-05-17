@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>访问日志统计</title>
+<style>
+.div{
+	background-color:#CCC;
+	border:0px solid #000;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+.p{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+}
+</style>
+</head>
+
+<body>
+<h4>访问日志统计</h4>
+<label>省份：</label>   
+
+	<div class="div">
+#!/bin/bash</br>
+#by cookie</br>
+logdir=/var/log/nginx</br>
+sourse=myid.cookie.com.access.proxy.log</br>
+dir=/root/tongji</br>
+now=`date +%Y.%m.%d-%H:%M`</br>
+mailcontent=$dir/mailcontent</br>
+> "$mailcontent"</br>
+cat $logdir/$sourse | awk '{print $1}' | cut -d: -f1 | sort | uniq -c | sort -nr | awk '{if($1>2000){print($0)}}'> $dir/myid.$now.txt</br>
+</br>
+mkdir $dir/$now</br>
+for ip in `cat $dir/myid.$now.txt | awk '{print $2}'`</br>
+do </br>
+ cat $logdir/$sourse | grep $ip | awk '{print $1"\t"$7}' > $dir/$now/$ip.txt</br>
+done</br>
+</br>
+tar zcvf $dir/$now.tar.gz $dir/$now</br>
+</br>
+echo -e "Dear all!\n" >> $mailconteint</br>
+echo -e "\t myid前台`date +%Y.%m.%d-%H:%M` 访问日志统计（访问量2000以上）。IP共`cat $dir/myid.$now.txt | wc -l`个。分别是:\n 访问量 \t IP \n `cat $dir/myid.$now.txt`\n附件为以上的IP具体访问节点报告，烦请查收。" >> $mailcontent
+cat $mailcontent | mutt -s "myid前台日志统计`date +%Y.%m.%d-%H:%M`" 135@668x.net -c 323@668x.net -c 409@668x.net -a $dir/$now.tar.gz</br>
+#cat $mailcontent | mutt -s "myid前台日志统计`date +%Y.%m.%d-%H:%M`" 135@668x.net -a $dir/$now.tar.gz</br>
+</br>
+rm -rf /root/tongji/myid*</br>
+rm -rf /root/tongji/*.tar.gz</br>
+rm -rf /root/tongji/$now</br>
+	</div>
+</body>
+</html>
