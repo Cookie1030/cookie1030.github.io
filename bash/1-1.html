@@ -48,5 +48,60 @@ rm -rf /root/tongji/myid*</br>
 rm -rf /root/tongji/*.tar.gz</br>
 rm -rf /root/tongji/$now</br>
 	</div>
+	<h4>访问日志统计</h4>
+<label>cat tongji2.sh</label>   
+<div class="div">
+#!/bin/bash</br>
+#by cookie</br>
+logdir=/var/log/nginx</br>
+logname=myid.hx9999.com.access.proxy.log</br>
+hour=`date +%H` #小时</br>
+today=`date +%d/%h/%Y`   #日/月/年</br>
+duetime=`date +%H:%M:%S`  #时：分：秒</br>
+datetime=`date +%Y.%m.%d-%H`</br>
+td=`date +%Y-%m-%d`  #今天日期</br>
+yd=`date -d "1 day ago" +"%Y-%m-%d"`  #昨天日期</br>
+mailContent=mailContent</br>
+>"$mailContent"</br>
+#first字段为截取日志文件中第一条记录的具体时间(时：分：秒)</br>
+first=`cat $logdir/$logname | awk '{print $4}'| head -n 1 | cut -b 14-21`</br>
+#last字段为截取日志文件中最后一条记录的具体时间(时：分：秒)</br>
+last=`cat $logdir/$logname | awk '{print $4}'| tail -n 1 | cut -b 14-21`</br>
+if [ $hour = 09 ];then</br>
+dd=$td凌晨3点至早上9点整</br>
+for i in 03 04 05 06 07 08</br>
+do
+ cat $logdir/$logname | grep $today:$i > log/$i</br>
+done</br>
+elif [ $hour = 17 ];then</br>
+dd=$td早上9点至下午17点整</br>
+for i in 09 10 11 12 13 14 15 16</br>
+do</br>
+ cat $logdir/$logname | grep $today:$i > log/$i</br>
+done</br>
+elif [ $hour = 03 ];then</br>
+dd=$yd下午17至$td凌晨3点整</br>
+for i in 17 18 19 20 21 22 23 00 01 02</br>
+do</br>
+ cat $logdir/$logname | grep $today:$i > log/$i</br>
+done</br>
+fi</br>
+cat log/* > log/allduelog</br>
+cat log/allduelog | awk '{print $1}' | cut -d: -f1 | sort | uniq -c | sort -nr | awk '{if($1>2000){print($0)}}'> myid.$datetime.txt</br>
+mkdir $datetime</br>
+for ip in `cat myid.$datetime.txt | awk '{print $2}'`</br>
+do</br>
+ cat log/allduelog | grep $ip | awk '{print $1"\t"$7}' > $datetime/$ip.txt</br>
+done</br>
+tar zcvf $datetime.tar.gz $datetime</br>
+echo -e "Dear all!\n" >> $mailContent</br>
+echo -e "\t 恒信myid前台 $dd 访问日志统计（访问量2000以上）。IP共`cat myid.$datetime.txt | wc -l`个。分别是:\n 访问量 \t IP \n `cat myid.$datetime.txt`\n附件为以上的IP具体访问节点报告，烦请查收。" >> $mailContent
+cat $mailContent | mutt -s "恒信myid前台日志统计 $dd " 135@668x.net -c 323@668x.net -c 409@668x.net -a $datetime.tar.gz</br>
+#cat $mailContent | mutt -s "恒信myid前台日志统计 $dd " 135@668x.net -a $datetime.tar.gz</br>
+rm -rf $datetime</br>
+rm -rf log/*</br>
+rm -rf *.txt</br>
+rm -rf *.tar.gz
+</div>
 </body>
 </html>
