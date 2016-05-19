@@ -97,7 +97,6 @@ tar zcvf $datetime.tar.gz $datetime</br>
 echo -e "Dear all!\n" >> $mailContent</br>
 echo -e "\t myid前台 $dd 访问日志统计（访问量2000以上）。IP共`cat myid.$datetime.txt | wc -l`个。分别是:\n 访问量 \t IP \n `cat myid.$datetime.txt`\n附件为以上的IP具体访问节点报告，烦请查收。" >> $mailContent
 cat $mailContent | mutt -s "myid前台日志统计 $dd " cookie@xxxx.net -a $datetime.tar.gz</br>
-#cat $mailContent | mutt -s "myid前台日志统计 $dd " 135@668x.net -a $datetime.tar.gz</br>
 rm -rf $datetime</br>
 rm -rf log/*</br>
 rm -rf *.txt</br>
