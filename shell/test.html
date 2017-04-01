@@ -27,9 +27,9 @@ if (window.innerWidth) sb = sb.nextSibling;
 o.removeAttribute("class"); 
 o.setAttribute("class", "hide"); 
 if (window.innerWidth) //ff 
-o.textContent = "Ìï" + o.textContent.substring(1); 
+o.textContent = "+" + o.textContent.substring(1); 
 else 
-o.innerText = "Ìï" + o.innerText.substring(1); 
+o.innerText = "+" + o.innerText.substring(1); 
 } 
 else 
 { 
@@ -44,9 +44,9 @@ if (window.innerWidth) sb = sb.nextSibling;
 o.removeAttribute("class"); 
 o.setAttribute("class", "expand"); 
 if (window.innerWidth) //ff 
-o.textContent = "Ô»" + o.textContent.substring(1); 
+o.textContent = "-" + o.textContent.substring(1); 
 else 
-o.innerText = "Ô»" + o.innerText.substring(1); 
+o.innerText = "-" + o.innerText.substring(1); 
 } 
 } 
 function maketree(obj) 
@@ -56,7 +56,7 @@ for (var i = 0; i < dts.length; i++)
 { 
 dts[i].setAttribute("class", "expand"); 
 if (window.innerWidth) //ff 
-dts[i].textContent = "Ô»" + dts[i].textContent; 
+dts[i].textContent = "-" + dts[i].textContent; 
 else 
 dts[i].innerText = "-" + dts[i].innerText; 
 dts[i].onclick = function() { toggleChild(this); }; 
